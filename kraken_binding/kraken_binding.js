@@ -69,8 +69,14 @@ export class KrBinding {
 
     setPropertyValue(propertyID, value) {
         if (!propertyID) { return null }
+
         let propertyElement = this.getPropertyElement(propertyID)
-        propertyElement.textContent = value
+
+        if (propertyElement.value) {
+            propertyElement.value = value
+        } else {
+            propertyElement.textContent = value
+        }
     }
 
 
@@ -100,6 +106,17 @@ export class KrBinding {
 
         for (let t of this.element.getElementsByClassName('krProperty')) {
             observer.observe(t, config);
+        }
+    }
+
+
+    initializeListener(){
+
+        for(let d of this.element.getElementsByClassName('krProperty')){
+
+            d.addEventListener("change", (event) => {            
+                this.thing.setProperty(d['data-propertyID'], event.target.value)
+            });
         }
     }
 

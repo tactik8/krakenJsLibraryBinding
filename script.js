@@ -17,3 +17,4 @@ let binding = new KrBinding(element, thing)
 console.log(binding)
 
 thing.addProperty('name', 'bob')
+thing.addProperty('url', 'https')

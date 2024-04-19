@@ -12,7 +12,6 @@ import { KrBinding, krakenBinding } from 'https://cdn.jsdelivr.net/gh/tactik8/kr
 ```
 
 
-
 Set classname #krThing to any block representing a thing object.
 
 Set data-propertyID to designate the property being showned. 
