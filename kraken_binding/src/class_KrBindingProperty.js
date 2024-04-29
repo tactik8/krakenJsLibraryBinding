@@ -71,12 +71,30 @@ export class KrBindingProperty {
     }
 
     set value(value) {
+        if(this._element.tagName == 'IMG'){
+            return this.setValueImage(value)
+        } else {
+            this.setValueText(value)
+        }
+        
+    }
+
+
+
+    setValueText(value){
         if (this._element.value) {
             this._element.value = value
         } else {
             this._element.textContent = value
         }
+        
     }
+    
+    setValueImage(value){
+        this._element.setAttribute('src', value)
+    }
+
+    
 }
 
 
