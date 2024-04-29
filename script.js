@@ -4,7 +4,7 @@
 import { KrThing } from 'https://tactik8.github.io/kraken_thing_js/kraken_thing/kraken_thing.js'
 import { kraken_bootstrap } from 'https://tactik8.github.io/krakenJsBootstrap/kraken_bootstrap/kraken_bootstrap.js'
 
-import { KrBinding, krakenBinding } from './kraken_binding/kraken_binding.js'
+import { kraken_binding } from './kraken_binding/kraken_binding.js'
 
 
 let thing = new KrThing('Thing');
@@ -18,15 +18,10 @@ let card1 = thing.html_cardVertical()
 card1.innerHTML = card1.innerHTML.replace('heading1', 'name')
 card1.innerHTML = card1.innerHTML.replace('heading2', 'url')
 let div3 = document.getElementById('test3')
-let binding1 = new KrBinding(card1, thing)
+let binding1 = new kraken_binding.KrBinding(card1, thing)
+binding1.setEditable()
 
-console.log(binding1.getPropertyElements())
 
-for(let p of binding1.getPropertyElements()){
-
-    p.setAttribute('contenteditable', 'true')
-    
-}
 
 div3.appendChild(card1)
 
@@ -35,7 +30,8 @@ let card2 = thing.html_cardVertical()
 card2.innerHTML = card1.innerHTML.replace('heading1', 'name')
 card2.innerHTML = card1.innerHTML.replace('heading2', 'url')
 let div4 = document.getElementById('test4')
-let binding2 = new KrBinding(card2, thing)
+let binding2 = new kraken_binding.KrBinding(card2, thing)
+binding2.setEditable()
 
 div4.appendChild(card2)
 
