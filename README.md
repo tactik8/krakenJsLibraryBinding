@@ -7,7 +7,7 @@ When a value is updated in thing, element gets updated and vice-versa.
 
 
 ```
-import { KrBinding, krakenBinding } from 'https://cdn.jsdelivr.net/gh/tactik8/krakenJsLibraryBinding@main/kraken_binding/kraken_binding.js'
+import { KrBinding, krakenBinding } from 'https://tactik8.github.io/krakenJsLibraryBinding/kraken_binding/kraken_binding.js'
 
 ```
 
