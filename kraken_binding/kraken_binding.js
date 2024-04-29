@@ -140,6 +140,25 @@ export class KrBinding {
             element.setPropertyValue(event.data.propertyID, event.data.newValue);
         });
     }
+
+    // -----------------------------------------------------
+    //  refresh 
+    // -----------------------------------------------------
+
+    refresh(){
+
+        let properties = this.getPropertyElements()
+        for(let p of properties){
+
+            const propertyID = d.getAttribute('data-propertyid')
+            const value = this.thing.getProperty(propertyID)?.value
+            this.setPropertyValue(propertyID, value)
+            
+        }
+        
+    }
+
+    
 }
 
 
