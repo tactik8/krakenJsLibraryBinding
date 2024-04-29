@@ -14,7 +14,7 @@ export const krakenBinding = {
 
 
 function getBindings(thing) {
-    let thingElement = element.closest('.krThing')
+    //let thingElement = element.closest('.krThing')
 
     let results = []
     for (let t of bindingsDB) {
@@ -27,6 +27,7 @@ function getBindings(thing) {
 
 
 function getBinding(element) {
+    // Returns the binding for a given element
     let thingElement = element.closest('.krThing')
 
     for (let t of bindingsDB) {
@@ -47,7 +48,8 @@ export class KrBinding {
         this.thing = thing
         this.element.id = this.id
         this.initializeObserver()
-        this.register()
+        this.initEventListener()
+        this.initializeChangeListener()
         bindingsDB.push(this)
     }
 
@@ -55,10 +57,18 @@ export class KrBinding {
     // ---------------- Element manipulations-- -----------------
     // ----------------------------------------------------------
 
+
+    getPropertyElements() {
+        let propertyElements = this.element.querySelectorAll(`.krProperty`)
+        return propertyElements
+        
+    }
+
+    
     getPropertyElement(propertyID) {
 
-        let propertyElements = this.element.querySelector(`.krProperty[data-propertyID="${propertyID}"]`)
-        return propertyElements
+        let propertyElement = this.element.querySelector(`.krProperty[data-propertyID="${propertyID}"]`)[0]
+        return propertyElement
     }
 
     getPropertyValue(propertyID) {
@@ -68,6 +78,7 @@ export class KrBinding {
     }
 
     setPropertyValue(propertyID, value) {
+
         if (!propertyID) { return null }
 
         let propertyElement = this.getPropertyElement(propertyID)
@@ -92,12 +103,10 @@ export class KrBinding {
             mutations.forEach(function(mutation) {
 
                 if (mutation.type == "characterData") {
-
                     let binding = getBinding(mutation.target.parentElement)
-
+                    console.log(binding)
                     let propertyElement = mutation.target.parentElement.closest('.krProperty')
-
-                    binding.thing.setProperty(propertyElement['data-propertyID'], mutation.target.textContent)
+                    binding.thing.setProperty(propertyElement.getAttribute('data-propertyid'), mutation.target.textContent)
 
                 }
             });
@@ -110,12 +119,13 @@ export class KrBinding {
     }
 
 
-    initializeListener(){
+    initializeChangeListener(){
 
-        for(let d of this.element.getElementsByClassName('krProperty')){
-
-            d.addEventListener("change", (event) => {            
-                this.thing.setProperty(d['data-propertyID'], event.target.value)
+        let elements = this.element.getElementsByClassName('krProperty')
+        for(let d of elements){
+            let propertyID = d.getAttribute('data-propertyid')
+            d.addEventListener("change", (event) => {     
+                this.thing.setProperty(propertyID, event.target.value)
             });
         }
     }
@@ -124,13 +134,12 @@ export class KrBinding {
     // -------------- Thing to element bindings -----------------
     // ----------------------------------------------------------
 
-    register() {
-        this.thing.register((event) => {
-            //console.log('aa', this, event)
-            this.setPropertyValue(event.propertyID, event.newValue);
+    initEventListener() {
+        let element = this
+        this.thing.addEventListener('all', (event) => {
+            element.setPropertyValue(event.data.propertyID, event.data.newValue);
         });
     }
-
 }
 
 
